@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services - Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="12" rx="3" stroke="#fff" stroke-width="1.5"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="15" cy="13" r="1.5" fill="#fff"/><path d="M9 17h6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M12 4v4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1.2" fill="#fff"/><path d="M7 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/><path d="M17 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <h1 style="font-size:16px;">Sumaa FIN Services</h1>
+      </div>
+            <nav>
+        <a href="dashboard.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="deposit.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          Deposit
+        </a>
+        <a href="withdraw.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          Withdraw
+        </a>
+        <a href="support.html" class="active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Support
+        </a>
+        <a href="profile.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </a>
+      </nav>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h2>Support</h2>
+        </div>
+        <div class="topbar-right">
+          <a href="notifications.html" class="icon-btn" id="notifBellBtn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="nav-badge" id="notifBadge"></span>
+          </a>
+          <a href="#" class="icon-btn logout-btn" id="logoutLink" aria-label="Logout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel" style="max-width:640px;">
+        <h3>New Ticket</h3>
+        <form id="newTicketForm">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" maxlength="150" required placeholder="e.g. Deposit not showing up">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" maxlength="2000" required placeholder="Describe your issue..."></textarea>
+          <button type="submit" class="btn" id="submitBtn">Submit Ticket</button>
+        </form>
+        <div class="error-box" id="newTicketError"></div>
+        <div class="success-box" id="newTicketSuccess"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Your Tickets</h3>
+        <div id="tableWrap"><p class="empty-msg">Loading...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket thread panel -->
+  <div id="ticketPanel" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:50;">
+    <div class="card" style="max-width:560px; max-height:80vh; overflow-y:auto;">
+      <h3 style="margin-top:0;" id="ticketSubject"></h3>
+      <p class="empty-msg" id="ticketMeta" style="padding-top:0;"></p>
+      <div id="threadWrap" style="margin-bottom:16px;"></div>
+      <label for="replyMessage">Reply</label>
+      <textarea id="replyMessage" rows="3" placeholder="Type your reply..."></textarea>
+      <div class="action-row" style="margin-top:14px;">
+        <button class="btn small" id="replyBtn">Send Reply</button>
+        <button class="btn small secondary" id="closeTicketBtn">Close</button>
+      </div>
+      <div class="error-box" id="ticketError"></div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    const user = requireUser();
+    initNotifBadge();
+
+    function statusBadge(status) { return `<span class="badge ${status === 'resolved' ? 'approved' : 'pending'}">${status}</span>`; }
+
+    let activeTicketId = null;
+
+    async function loadTickets() {
+      const wrap = document.getElementById('tableWrap');
+      try {
+        const data = await apiFetch('/user/support');
+        if (!data.tickets.length) {
+          wrap.innerHTML = '<p class="empty-msg">No tickets yet.</p>';
+          return;
+        }
+        let html = '<table><thead><tr><th>Date</th><th>Subject</th><th>Status</th><th>Updated</th><th></th></tr></thead><tbody>';
+        data.tickets.forEach(t => {
+          html += `<tr>
+            <td>${formatDate(t.created_at)}</td>
+            <td>${t.subject}</td>
+            <td>${statusBadge(t.status)}</td>
+            <td>${formatDate(t.updated_at)}</td>
+            <td><button class="btn small secondary" onclick="openTicket(${t.id})">View</button></td>
+          </tr>`;
+        });
+        html += '</tbody></table>';
+        wrap.innerHTML = html;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function openTicket(id) {
+      activeTicketId = id;
+      document.getElementById('ticketError').style.display = 'none';
+      document.getElementById('replyMessage').value = '';
+      try {
+        const data = await apiFetch(`/user/support/${id}`);
+        document.getElementById('ticketSubject').textContent = data.ticket.subject;
+        document.getElementById('ticketMeta').innerHTML = `Status: ${statusBadge(data.ticket.status)}`;
+
+        const threadWrap = document.getElementById('threadWrap');
+        threadWrap.innerHTML = data.messages.map(m => `
+          <div style="margin-bottom:10px; padding:10px 12px; border-radius:8px; background: ${m.sender_role === 'admin' ? 'rgba(242,183,5,0.08)' : 'var(--panel-light)'};">
+            <div style="font-size:12px; color:var(--muted); margin-bottom:4px;">${m.sender_role === 'admin' ? 'Support Team' : 'You'} — ${formatDate(m.created_at)}</div>
+            <div>${m.message}</div>
+          </div>
+        `).join('');
+
+        document.getElementById('ticketPanel').style.display = 'flex';
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    document.getElementById('closeTicketBtn').addEventListener('click', () => {
+      document.getElementById('ticketPanel').style.display = 'none';
+    });
+
+    document.getElementById('replyBtn').addEventListener('click', async () => {
+      const errorBox = document.getElementById('ticketError');
+      errorBox.style.display = 'none';
+      const message = document.getElementById('replyMessage').value.trim();
+      if (!message) return;
+      try {
+        await apiFetch(`/user/support/${activeTicketId}/reply`, {
+          method: 'POST',
+          body: JSON.stringify({ message })
+        });
+        await openTicket(activeTicketId);
+        loadTickets();
+      } catch (err) {
+        showBox(errorBox, err.message);
+      }
+    });
+
+    document.getElementById('newTicketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('newTicketError');
+      const successBox = document.getElementById('newTicketSuccess');
+      errorBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      try {
+        await apiFetch('/user/support', {
+          method: 'POST',
+          body: JSON.stringify({ subject, message })
+        });
+        showBox(successBox, 'Ticket submitted. Our team will reply here.', false);
+        document.getElementById('newTicketForm').reset();
+        loadTickets();
+      } catch (err) {
+        showBox(errorBox, err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Ticket';
+      }
+    });
+
+    loadTickets();
+  </script>
+</body>
+</html>

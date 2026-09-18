@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services - Deposit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  .deposit-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: start;
+  }
+  .qr-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 18px;
+    min-width: 200px;
+  }
+  .qr-panel-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .qr-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    line-height: 0;
+    box-shadow: 0 0 0 3px rgba(0,200,255,0.25), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .qr-network-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,200,255,0.25);
+    border-radius: 20px;
+    padding: 4px 12px;
+    letter-spacing: 0.5px;
+  }
+  .qr-warning {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 170px;
+  }
+  .qr-warning strong { color: var(--gold); }
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="12" rx="3" stroke="#fff" stroke-width="1.5"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="15" cy="13" r="1.5" fill="#fff"/><path d="M9 17h6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M12 4v4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1.2" fill="#fff"/><path d="M7 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/><path d="M17 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <h1 style="font-size:16px;">Sumaa FIN Services</h1>
+      </div>
+            <nav>
+        <a href="dashboard.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="deposit.html" class="active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          Deposit
+        </a>
+        <a href="withdraw.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          Withdraw
+        </a>
+        <a href="support.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Support
+        </a>
+        <a href="profile.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </a>
+      </nav>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h2>Deposit Funds</h2>
+        </div>
+        <div class="topbar-right">
+          <a href="notifications.html" class="icon-btn" id="notifBellBtn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="nav-badge" id="notifBadge"></span>
+          </a>
+          <div class="user-chip">Principal: <span id="walletBalance">$0.00</span></div>
+          <a href="#" class="icon-btn logout-btn" id="logoutLink" aria-label="Logout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Deposit via USDT (BEP20)</h3>
+        <p class="empty-msg" style="padding-top:0; margin-bottom:24px;">
+          Send USDT on the <strong>BEP20 (BNB Smart Chain)</strong> network to the address below.
+          Scan the QR code or copy the address, then submit your transaction hash for admin approval.
+        </p>
+
+        <div class="deposit-layout">
+          <!-- Left: address + form -->
+          <div>
+            <label>Send To Address</label>
+            <div style="display:flex; gap:8px; align-items:center; margin-bottom:20px;">
+              <input type="text" id="depositAddress" readonly value="Loading...">
+              <button type="button" class="btn small secondary" id="copyAddressBtn">Copy</button>
+            </div>
+
+            <form id="depositForm">
+              <label for="amount">Amount (USDT)</label>
+              <input type="number" id="amount" min="1" step="0.01" required placeholder="e.g. 1000.00">
+              <div id="depositRuleNotice" class="empty-msg" style="padding-top:6px;"></div>
+
+              <label for="txnRef">Transaction Hash</label>
+              <input type="text" id="txnRef" required placeholder="0x... (BscScan transaction hash)">
+
+              <button type="submit" class="btn" id="submitBtn">Submit Deposit Request</button>
+            </form>
+            <div class="error-box" id="errorBox"></div>
+            <div class="success-box" id="successBox"></div>
+          </div>
+
+          <!-- Right: QR code -->
+          <div class="qr-panel">
+            <div class="qr-panel-label">Scan to deposit</div>
+            <div class="qr-box" id="depositQR">
+              <!-- QR generated by JS -->
+            </div>
+            <div class="qr-network-badge">BEP20 · USDT</div>
+            <div class="qr-warning">
+              Only send <strong>USDT</strong> via<br><strong>BNB Smart Chain (BEP20)</strong>.<br>Wrong network = lost funds.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Deposit History</h3>
+        <div id="tableWrap"><p class="empty-msg">Loading...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    const user = requireUser();
+    initNotifBadge();
+
+    let me = null;
+
+    function statusBadge(status) { return `<span class="badge ${status}">${status}</span>`; }
+
+    function updateDepositRule() {
+      const amountInput = document.getElementById('amount');
+      const notice = document.getElementById('depositRuleNotice');
+      if (!me) return;
+      const minDeposit = me.min_deposit;
+      const multiple = me.deposit_topup_multiple;
+      if (me.principal_wallet >= minDeposit) {
+        amountInput.min = multiple;
+        amountInput.step = multiple;
+        notice.textContent = `Your Principal Wallet is $${minDeposit}+, so you can deposit in multiples of $${multiple} (e.g. ${multiple}, ${multiple * 2}, ${multiple * 3}...).`;
+      } else {
+        amountInput.min = minDeposit;
+        amountInput.step = '0.01';
+        notice.textContent = `Minimum deposit is $${minDeposit}. Once your Principal Wallet reaches $${minDeposit}, you can top up in multiples of $${multiple}.`;
+      }
+    }
+
+    async function loadMe() {
+      me = await apiFetch('/user/me');
+      document.getElementById('walletBalance').textContent = formatMoney(me.principal_wallet);
+      const addr = me.deposit_address || '';
+      document.getElementById('depositAddress').value = addr || 'Not configured — contact support';
+
+      // Generate QR code
+      const qrContainer = document.getElementById('depositQR');
+      qrContainer.innerHTML = '';
+      if (addr) {
+        new QRCode(qrContainer, {
+          text: addr,
+          width: 160,
+          height: 160,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      } else {
+        qrContainer.innerHTML = '<div style="width:160px;height:160px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;">Address not configured</div>';
+      }
+
+      updateDepositRule();
+    }
+
+    document.getElementById('copyAddressBtn').addEventListener('click', () => {
+      const input = document.getElementById('depositAddress');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        const btn = document.getElementById('copyAddressBtn');
+        const old = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = old, 1200);
+      }).catch(() => {});
+    });
+
+    async function loadHistory() {
+      const wrap = document.getElementById('tableWrap');
+      const data = await apiFetch('/user/deposits');
+      if (!data.deposits.length) {
+        wrap.innerHTML = '<p class="empty-msg">No deposit requests yet.</p>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Txn Hash</th><th>Status</th><th>Remarks</th></tr></thead><tbody>';
+      data.deposits.forEach(d => {
+        html += `<tr>
+          <td>${formatDate(d.created_at)}</td>
+          <td>${formatMoney(d.amount)}</td>
+          <td>${d.method || '-'}</td>
+          <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.txn_ref || '-'}</td>
+          <td>${statusBadge(d.status)}</td>
+          <td>${d.remarks || '-'}</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+
+    document.getElementById('depositForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      errorBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const amount = Number(document.getElementById('amount').value);
+      const minDeposit = me.min_deposit;
+      const multiple = me.deposit_topup_multiple;
+
+      if (me.principal_wallet >= minDeposit) {
+        if (Math.round(amount * 100) % (multiple * 100) !== 0) {
+          showBox(errorBox, `Your Principal Wallet is already $${minDeposit}+, so deposits must be in multiples of $${multiple}.`);
+          return;
+        }
+      } else if (amount < minDeposit) {
+        showBox(errorBox, `Minimum deposit is $${minDeposit}. Once your Principal Wallet reaches $${minDeposit}, you can top up in multiples of $${multiple}.`);
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        await apiFetch('/user/deposits', {
+          method: 'POST',
+          body: JSON.stringify({
+            amount: document.getElementById('amount').value,
+            txn_ref: document.getElementById('txnRef').value
+          })
+        });
+        showBox(successBox, 'Deposit request submitted! Awaiting admin approval.', false);
+        document.getElementById('depositForm').reset();
+        updateDepositRule();
+        loadHistory();
+      } catch (err) {
+        showBox(errorBox, err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Deposit Request';
+      }
+    });
+
+    loadMe();
+    loadHistory();
+  </script>
+</body>
+</html>

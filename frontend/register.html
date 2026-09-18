@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services - Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="auth-page-wrap">
+  <div class="auth-shell">
+
+    <div class="auth-eyebrow"><span class="pulse-dot"></span> Sumaa FIN Services Network</div>
+
+    <div class="auth-bot">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="8" width="16" height="12" rx="3" stroke="#00c8ff" stroke-width="1.5"/>
+        <circle cx="9" cy="13" r="1.5" fill="#00c8ff"/>
+        <circle cx="15" cy="13" r="1.5" fill="#00c8ff"/>
+        <path d="M9 17h6" stroke="#00c8ff" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M12 4v4" stroke="#00c8ff" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="12" cy="3" r="1.2" fill="#00c8ff"/>
+        <path d="M7 8V6.5" stroke="#00c8ff" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M17 8V6.5" stroke="#00c8ff" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="auth-border-glow">
+      <div class="auth-inner-card">
+        <h2 style="text-align:center;margin-bottom:6px;">Create Account</h2>
+        <p style="text-align:center;color:var(--text-dim);font-size:13px;margin-bottom:24px;">Join the Sumaa FIN Services network</p>
+
+        <form id="registerForm">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required placeholder="John Doe">
+
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="you@example.com" autocomplete="username">
+
+          <label for="password">Password</label>
+          <input type="password" id="password" required minlength="6" placeholder="At least 6 characters" autocomplete="new-password">
+
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required minlength="6" placeholder="Repeat password" autocomplete="new-password">
+
+          <button type="submit" class="btn" id="submitBtn" style="margin-top:18px;">Create Account</button>
+        </form>
+
+        <div class="error-box" id="errorBox"></div>
+        <div class="success-box" id="successBox"></div>
+
+        <div class="foot-note" style="margin-top:20px;text-align:center;font-size:13px;color:var(--text-dim);">
+          Already have an account? <a href="login.html">Log in</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-footnote">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z" stroke="currentColor" stroke-width="1.6"/></svg>
+      Secured &amp; Encrypted
+    </div>
+
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  (function () {
+    const user = getUser();
+    if (getToken() && user) {
+      window.location.href = user.role === 'admin' ? 'admin-dashboard.html' : 'dashboard.html';
+    }
+  })();
+
+  const form = document.getElementById('registerForm');
+  const errorBox = document.getElementById('errorBox');
+  const successBox = document.getElementById('successBox');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+    successBox.style.display = 'none';
+
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password !== confirmPassword) {
+      showBox(errorBox, 'Passwords do not match');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating account...';
+
+    try {
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password,
+        confirmPassword
+      };
+
+      const data = await apiFetch('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      saveSession(data.token, data.user);
+      showBox(successBox, 'Account created! Redirecting...', false);
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
+    } catch (err) {
+      showBox(errorBox, err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Account';
+    }
+  });
+</script>
+</body>
+</html>

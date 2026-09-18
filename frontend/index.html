@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services — Real Estate, Gold &amp; Wealth Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  :root {
+    --luxe-gold:       #d4af37;
+    --luxe-gold-light: #f2d98a;
+    --luxe-gold-dark:  #9c7a1e;
+    --luxe-gold-dim:   rgba(212,175,55,0.10);
+    --luxe-gold-glow:  rgba(212,175,55,0.28);
+  }
+
+  body { overflow-x: hidden; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* ── NAVBAR ── */
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(2,8,18,0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .site-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-brand .logo {
+    width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(145deg, #0064cc, #003a80);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px rgba(0,200,255,0.35), 0 8px 22px rgba(0,150,255,0.25);
+  }
+  .nav-brand .logo svg { width: 23px; height: 23px; }
+  .nav-brand .name { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18.5px; letter-spacing: -0.3px; line-height: 1.15; }
+  .nav-brand .name span { display: block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 10.5px; letter-spacing: 0.14em; color: var(--luxe-gold-light); text-transform: uppercase; margin-top: 2px; }
+
+  .nav-links { display: flex; align-items: center; gap: 34px; }
+  .nav-links a { color: var(--text-dim); font-size: 14px; font-weight: 500; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+  .btnx {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 11px 22px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    font-family: inherit; cursor: pointer; border: none; white-space: nowrap;
+    transition: filter 0.15s, transform 0.12s, box-shadow 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+    text-decoration: none !important;
+  }
+  .btnx-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btnx-ghost:hover { border-color: rgba(0,200,255,0.4); color: var(--accent); background: var(--panel-light); }
+  .btnx-blue { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #020812; box-shadow: 0 6px 22px rgba(0,200,255,0.32); }
+  .btnx-blue:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(0,200,255,0.42); }
+  .btnx-gold { background: linear-gradient(135deg, var(--luxe-gold-light) 0%, var(--luxe-gold) 55%, var(--luxe-gold-dark) 100%); color: #241c04; box-shadow: 0 6px 22px var(--luxe-gold-glow); }
+  .btnx-gold:hover { filter: brightness(1.07); transform: translateY(-1px); box-shadow: 0 8px 30px var(--luxe-gold-glow); }
+  .btnx-lg { padding: 15px 28px; font-size: 15px; border-radius: 12px; }
+  .btnx svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── HERO ── */
+  .hero { position: relative; padding: 168px 0 100px; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px; padding: 7px 15px 7px 12px;
+    border-radius: 999px; border: 1px solid var(--glass-border); background: var(--glass);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--text-dim); margin-bottom: 26px;
+  }
+  .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); flex-shrink: 0; animation: pulse 2.2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+  .hero h1 { font-family: 'Sora', sans-serif; font-size: 47px; line-height: 1.14; font-weight: 700; letter-spacing: -1.1px; color: var(--text); margin-bottom: 22px; }
+  .hero h1 .accent-txt { background: linear-gradient(100deg, var(--accent-mid), var(--accent) 45%, var(--luxe-gold-light)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lead { font-size: 16.5px; color: var(--text-dim); line-height: 1.75; max-width: 500px; margin-bottom: 34px; }
+  .hero-cta { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+
+  .trust-row { display: flex; flex-wrap: wrap; gap: 22px; }
+  .trust-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); font-weight: 500; }
+  .trust-item svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; }
+
+  .hero-art-wrap { position: relative; }
+  .hero-art-card {
+    position: relative; border-radius: 26px; background: var(--panel);
+    border: 1px solid var(--glass-border); box-shadow: var(--shadow), 0 0 0 1px rgba(0,100,255,0.06);
+    padding: 10px; overflow: hidden;
+  }
+  .hero-art-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 25% 15%, rgba(0,200,255,0.10), transparent 55%),
+                radial-gradient(circle at 80% 85%, rgba(212,175,55,0.10), transparent 55%);
+    pointer-events: none;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { position: relative; z-index: 1; padding: 90px 0; }
+  .sec-head { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+  .sec-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .sec-head h2 { font-family: 'Sora', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 14px; }
+  .sec-head p { color: var(--text-dim); font-size: 15px; line-height: 1.7; }
+
+  /* ── STATS ── */
+  .stats-strip { padding: 46px 0; border-top: 1px solid var(--border-dim); border-bottom: 1px solid var(--border-dim); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat-item { text-align: center; padding: 0 12px; border-left: 1px solid var(--border-dim); }
+  .stat-item:first-child { border-left: none; }
+  .stat-num { font-family: 'Sora', sans-serif; font-size: 34px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+  .stat-num .gold { color: var(--luxe-gold-light); }
+  .stat-num .blue { color: var(--accent); }
+  .stat-label { font-size: 12.5px; color: var(--muted); margin-top: 6px; font-weight: 500; }
+
+  /* ── SERVICES ── */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .svc-card {
+    background: var(--panel); border: 1px solid var(--glass-border); border-radius: var(--radius-xl);
+    padding: 32px 28px 30px; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .svc-card:hover { transform: translateY(-4px); border-color: rgba(0,200,255,0.28); box-shadow: 0 20px 44px rgba(0,0,0,0.45); }
+  .svc-icon { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+  .svc-icon svg { width: 28px; height: 28px; }
+  .svc-icon.blue { background: var(--accent-dim); box-shadow: inset 0 0 0 1px rgba(0,200,255,0.18); }
+  .svc-icon.blue svg { color: var(--accent); }
+  .svc-icon.gold { background: var(--luxe-gold-dim); box-shadow: inset 0 0 0 1px rgba(212,175,55,0.25); }
+  .svc-icon.gold svg { color: var(--luxe-gold-light); }
+  .svc-icon.violet { background: var(--violet-dim); box-shadow: inset 0 0 0 1px rgba(0,100,255,0.22); }
+  .svc-icon.violet svg { color: #6ea8ff; }
+  .svc-card h3 { font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.2px; }
+  .svc-card p.desc { font-size: 13.8px; color: var(--text-dim); line-height: 1.7; margin-bottom: 20px; }
+  .svc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+  .svc-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--text-dim); }
+  .svc-list li svg { width: 15px; height: 15px; color: var(--green); flex-shrink: 0; margin-top: 2px; }
+
+  /* ── WHY US ── */
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .why-card { text-align: center; padding: 30px 18px; }
+  .why-icon {
+    width: 54px; height: 54px; border-radius: 14px; margin: 0 auto 18px; display: flex;
+    align-items: center; justify-content: center; background: var(--panel-light); border: 1px solid var(--border);
+  }
+  .why-icon svg { width: 25px; height: 25px; color: var(--accent); }
+  .why-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; font-family: 'Sora', sans-serif; letter-spacing: -0.1px; }
+  .why-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  /* ── PROCESS ── */
+  .process-wrap { position: relative; }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .process-line { position: absolute; top: 27px; left: 12.5%; right: 12.5%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent); z-index: 0; }
+  .proc-step { position: relative; z-index: 1; text-align: center; padding: 0 16px; }
+  .proc-num {
+    width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1px solid var(--glass-border); font-family: 'Sora', sans-serif; font-weight: 700; font-size: 17px; color: var(--accent);
+    box-shadow: 0 0 0 6px var(--bg);
+  }
+  .proc-step h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 8px; font-family: 'Sora', sans-serif; }
+  .proc-step p { font-size: 12.8px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    border-radius: 28px; padding: 56px 60px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #071427 0%, #050d1a 60%, #0a0e1c 100%);
+    border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 90% 10%, rgba(212,175,55,0.14), transparent 60%),
+                radial-gradient(ellipse 50% 70% at 5% 100%, rgba(0,200,255,0.14), transparent 60%);
+    pointer-events: none;
+  }
+  .cta-banner-text { position: relative; z-index: 1; }
+  .cta-banner-text h3 { font-family: 'Sora', sans-serif; font-size: 27px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.4px; }
+  .cta-banner-text p { color: var(--text-dim); font-size: 14.5px; max-width: 440px; }
+  .cta-banner-actions { position: relative; z-index: 1; display: flex; gap: 14px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border-dim); padding: 64px 0 28px; position: relative; z-index: 1; }
+  .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 40px; margin-bottom: 46px; }
+  .footer-brand .nav-brand { margin-bottom: 16px; }
+  .footer-brand p { font-size: 13.3px; color: var(--muted); line-height: 1.7; max-width: 300px; margin-bottom: 18px; }
+  .footer-col h5 { font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a { font-size: 13.5px; color: var(--muted); }
+  .footer-col a:hover { color: var(--accent); text-decoration: none; }
+  .footer-badge { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); border: 1px solid var(--border-dim); border-radius: 10px; padding: 10px 14px; width: fit-content; }
+  .footer-badge svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 26px; border-top: 1px solid var(--border-dim); font-size: 12.5px; color: var(--muted); }
+
+  ::selection { background: var(--accent-dim); color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-brand" style="text-decoration:none;">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="16" height="12" rx="3" stroke="#00c8ff" stroke-width="1.5"/>
+          <circle cx="9" cy="13" r="1.5" fill="#00c8ff"/>
+          <circle cx="15" cy="13" r="1.5" fill="#00c8ff"/>
+          <path d="M9 17h6" stroke="#00c8ff" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M12 4v4" stroke="#00c8ff" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="12" cy="3" r="1.2" fill="#00c8ff"/>
+        </svg>
+      </div>
+      <div class="name">Sumaa FIN Services<span>Real Estate · Gold · Wealth</span></div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#why">Why Us</a>
+      <a href="#process">How It Works</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btnx btnx-ghost">Login</a>
+      <a href="register.html" class="btnx btnx-blue">
+        Register
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div id="home" class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="pulse-dot"></span> Sumaa FIN Services Network</div>
+      <h1>Build lasting wealth through <span class="accent-txt">real estate, gold &amp; smart investing</span></h1>
+      <p class="lead">For 5+ years, Sumaa FIN Services has guided clients through real estate opportunities, gold &amp; precious-metal investment, and personalized financial advisory — all managed from one secure dashboard.</p>
+
+      <div class="hero-cta">
+        <a href="register.html" class="btnx btnx-gold btnx-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          Create Free Account
+        </a>
+        <a href="login.html" class="btnx btnx-ghost btnx-lg">Login to Dashboard</a>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/></svg>
+          Secure &amp; Encrypted
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          5+ Years Experience
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
+          Personalized Advisory
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-art-wrap">
+      <div class="hero-art-card">
+        <svg viewBox="0 0 560 500" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of real estate, gold investment and financial growth">
+          <defs>
+            <linearGradient id="skyBg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0a1830"/>
+              <stop offset="100%" stop-color="#050c18"/>
+            </linearGradient>
+            <linearGradient id="bldA" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#123457"/>
+              <stop offset="100%" stop-color="#0a1f36"/>
+            </linearGradient>
+            <linearGradient id="bldB" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0d2a4a"/>
+              <stop offset="100%" stop-color="#081a2e"/>
+            </linearGradient>
+            <linearGradient id="coinGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f2d98a"/>
+              <stop offset="55%" stop-color="#d4af37"/>
+              <stop offset="100%" stop-color="#9c7a1e"/>
+            </linearGradient>
+            <linearGradient id="coinGradTop" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#fbeec0"/>
+              <stop offset="100%" stop-color="#e0bd55"/>
+            </linearGradient>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0080cc"/>
+              <stop offset="100%" stop-color="#00e0ff"/>
+            </linearGradient>
+            <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00c8ff" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="glowGold" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#d4af37" stop-opacity="0.30"/>
+              <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <rect x="0" y="0" width="560" height="500" rx="20" fill="url(#skyBg)"/>
+
+          <circle cx="440" cy="90" r="150" fill="url(#glowBlue)"/>
+          <circle cx="100" cy="420" r="160" fill="url(#glowGold)"/>
+
+          <g opacity="0.5" stroke="#12345a" stroke-width="1">
+            <circle cx="440" cy="120" r="60" fill="none"/>
+            <circle cx="440" cy="120" r="92" fill="none" stroke-dasharray="2 6"/>
+          </g>
+
+          <g>
+            <rect x="40" y="300" width="58" height="150" fill="url(#bldB)" stroke="#1c3d5e" stroke-width="1"/>
+            <rect x="108" y="250" width="66" height="200" fill="url(#bldA)" stroke="#1c3d5e" stroke-width="1"/>
+            <rect x="184" y="320" width="50" height="130" fill="url(#bldB)" stroke="#1c3d5e" stroke-width="1"/>
+            <rect x="244" y="270" width="60" height="180" fill="url(#bldA)" stroke="#1c3d5e" stroke-width="1"/>
+            <g fill="#3fc8ff" opacity="0.55">
+              <rect x="50" y="315" width="8" height="8"/><rect x="66" y="315" width="8" height="8"/><rect x="82" y="315" width="8" height="8"/>
+              <rect x="50" y="340" width="8" height="8"/><rect x="66" y="340" width="8" height="8"/><rect x="82" y="340" width="8" height="8"/>
+              <rect x="50" y="365" width="8" height="8"/><rect x="66" y="365" width="8" height="8"/><rect x="82" y="365" width="8" height="8"/>
+              <rect x="120" y="268" width="9" height="9"/><rect x="140" y="268" width="9" height="9"/><rect x="160" y="268" width="9" height="9"/>
+              <rect x="120" y="296" width="9" height="9"/><rect x="140" y="296" width="9" height="9"/><rect x="160" y="296" width="9" height="9"/>
+              <rect x="120" y="324" width="9" height="9"/><rect x="140" y="324" width="9" height="9"/><rect x="160" y="324" width="9" height="9"/>
+              <rect x="120" y="352" width="9" height="9"/><rect x="140" y="352" width="9" height="9"/><rect x="160" y="352" width="9" height="9"/>
+              <rect x="256" y="288" width="8" height="8"/><rect x="274" y="288" width="8" height="8"/><rect x="292" y="288" width="8" height="8"/>
+              <rect x="256" y="312" width="8" height="8"/><rect x="274" y="312" width="8" height="8"/><rect x="292" y="312" width="8" height="8"/>
+              <rect x="256" y="336" width="8" height="8"/><rect x="274" y="336" width="8" height="8"/><rect x="292" y="336" width="8" height="8"/>
+            </g>
+          </g>
+
+          <line x1="0" y1="450" x2="560" y2="450" stroke="#1a3450" stroke-width="1"/>
+
+          <polyline points="330,410 370,380 408,392 446,335 484,300 520,255" fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#00e0ff">
+            <circle cx="330" cy="410" r="4"/><circle cx="370" cy="380" r="4"/><circle cx="408" cy="392" r="4"/>
+            <circle cx="446" cy="335" r="4"/><circle cx="484" cy="300" r="4"/><circle cx="520" cy="255" r="5"/>
+          </g>
+          <path d="M508 253 L520 255 L515 267" fill="none" stroke="#00e0ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <g transform="translate(96,150)">
+            <ellipse cx="0" cy="46" rx="46" ry="15" fill="#9c7a1e" opacity="0.35"/>
+            <ellipse cx="0" cy="38" rx="46" ry="15" fill="url(#coinGrad)"/>
+            <ellipse cx="0" cy="24" rx="46" ry="15" fill="url(#coinGrad)"/>
+            <ellipse cx="0" cy="10" rx="46" ry="15" fill="url(#coinGrad)"/>
+            <ellipse cx="0" cy="0" rx="46" ry="15" fill="url(#coinGradTop)"/>
+            <ellipse cx="0" cy="0" rx="30" ry="9.5" fill="none" stroke="#a9821f" stroke-width="1.4" opacity="0.6"/>
+            <text x="0" y="4" text-anchor="middle" font-family="Sora, sans-serif" font-weight="700" font-size="13" fill="#5c4712">Au</text>
+          </g>
+
+          <g transform="translate(438,168)">
+            <rect x="-34" y="-22" width="68" height="44" rx="6" fill="url(#coinGrad)" stroke="#9c7a1e" stroke-width="1"/>
+            <rect x="-34" y="-22" width="68" height="10" rx="3" fill="url(#coinGradTop)"/>
+            <text x="0" y="8" text-anchor="middle" font-family="Sora, sans-serif" font-weight="700" font-size="12" fill="#5c4712">999.9</text>
+          </g>
+
+          <g transform="translate(60,70)" opacity="0.9">
+            <circle cx="0" cy="0" r="20" fill="#08182c" stroke="#00c8ff" stroke-width="1.4"/>
+            <path d="M-7 1l4 4 9-10" fill="none" stroke="#00c8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num"><span class="gold">5+</span></div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="blue">3</span></div>
+      <div class="stat-label">Investment Verticals</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="gold">24/7</span></div>
+      <div class="stat-label">Dashboard Access</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="blue">100%</span></div>
+      <div class="stat-label">Client-Focused Advisory</div>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">What We Offer</div>
+      <h2>Our Investment Verticals</h2>
+      <p>Three focused pillars, one relationship manager and a single dashboard to track it all.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"/></svg>
+        </div>
+        <h3>Real Estate Investment</h3>
+        <p class="desc">Curated residential and commercial opportunities selected for long-term appreciation and steady returns.</p>
+        <ul class="svc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Vetted property partnerships</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Residential &amp; commercial deals</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Long-term appreciation focus</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5.5"/><path d="M7.5 12.5L5 21l7-3 7 3-2.5-8.5"/></svg>
+        </div>
+        <h3>Gold &amp; Precious Metals</h3>
+        <p class="desc">Time-tested gold investment options designed to hedge inflation and diversify your portfolio.</p>
+        <ul class="svc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Physical &amp; paper gold options</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Inflation-hedge strategy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Secure custody guidance</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-5 3 3 5-7"/></svg>
+        </div>
+        <h3>Wealth &amp; Financial Advisory</h3>
+        <p class="desc">Personalized planning and ongoing portfolio management, all handled from your secure dashboard.</p>
+        <ul class="svc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Personalized portfolio planning</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Easy deposits &amp; withdrawals</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Ongoing performance tracking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" style="border-top:1px solid var(--border-dim);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Why Sumaa FIN Services</div>
+      <h2>Built on trust, refined by experience</h2>
+      <p>Every decision is backed by five years of hands-on experience across real estate, precious metals and financial advisory.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h4>5+ Years Experience</h4>
+        <p>A proven track record across real estate, gold and financial advisory services.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/></svg></div>
+        <h4>Secure &amp; Encrypted</h4>
+        <p>Your account, deposits and personal data are protected end-to-end.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21l8.84-8.61a5.5 5.5 0 000-7.78z"/></svg></div>
+        <h4>Dedicated Support</h4>
+        <p>A responsive support team ready to help whenever questions come up.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-5 3 3 5-7"/></svg></div>
+        <h4>Transparent Reporting</h4>
+        <p>Track every deposit, withdrawal and portfolio update from one dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="border-top:1px solid var(--border-dim);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Getting Started</div>
+      <h2>How It Works</h2>
+      <p>From sign-up to your first portfolio update, in four simple steps.</p>
+    </div>
+
+    <div class="process-wrap">
+      <div class="process-grid">
+        <div class="process-line"></div>
+        <div class="proc-step">
+          <div class="proc-num">1</div>
+          <h4>Register</h4>
+          <p>Create your free account in minutes.</p>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">2</div>
+          <h4>Consult</h4>
+          <p>Discuss your goals with our advisory team.</p>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">3</div>
+          <h4>Fund Your Account</h4>
+          <p>Make a secure deposit to get started.</p>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">4</div>
+          <h4>Grow &amp; Track</h4>
+          <p>Monitor performance anytime from your dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-banner">
+      <div class="cta-banner-text">
+        <h3>Ready to grow your wealth with us?</h3>
+        <p>Join Sumaa FIN Services and get a dedicated dashboard for real estate, gold and financial advisory — all in one place.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="register.html" class="btnx btnx-gold btnx-lg">Create Free Account</a>
+        <a href="login.html" class="btnx btnx-ghost btnx-lg">Login</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-brand" style="text-decoration:none;">
+          <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="16" height="12" rx="3" stroke="#00c8ff" stroke-width="1.5"/>
+              <circle cx="9" cy="13" r="1.5" fill="#00c8ff"/>
+              <circle cx="15" cy="13" r="1.5" fill="#00c8ff"/>
+              <path d="M9 17h6" stroke="#00c8ff" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M12 4v4" stroke="#00c8ff" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="12" cy="3" r="1.2" fill="#00c8ff"/>
+            </svg>
+          </div>
+          <div class="name">Sumaa FIN Services<span>Real Estate · Gold · Wealth</span></div>
+        </a>
+        <p>A trusted advisory partner for real estate investment, gold &amp; precious metals, and personalized wealth management.</p>
+        <div class="footer-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/></svg>
+          Secured &amp; Encrypted
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#process">How It Works</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Account</h5>
+        <ul>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="forgot-password.html">Forgot Password</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Real Estate Investment</a></li>
+          <li><a href="#services">Gold &amp; Precious Metals</a></li>
+          <li><a href="#services">Wealth Advisory</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Sumaa FIN Services. All rights reserved.</span>
+      <span>Real Estate · Gold Investment · Financial Services</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  (function () {
+    const user = getUser();
+    if (getToken() && user) {
+      const actions = document.querySelector('.nav-actions');
+      const target = user.role === 'admin' ? 'admin-dashboard.html' : 'dashboard.html';
+      actions.innerHTML = '<a href="' + target + '" class="btnx btnx-blue">Go to Dashboard' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>';
+    }
+  })();
+</script>
+</body>
+</html>

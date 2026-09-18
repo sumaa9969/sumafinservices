@@ -1,0 +1,12 @@
+{
+  "name": "bee-ai-verse-walletapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install": "npm --prefix backend install",
+    "start": "npm --prefix backend start"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

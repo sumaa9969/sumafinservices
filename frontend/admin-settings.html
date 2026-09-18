@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services - Admin Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="12" rx="3" stroke="#fff" stroke-width="1.5"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="15" cy="13" r="1.5" fill="#fff"/><path d="M9 17h6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M12 4v4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1.2" fill="#fff"/><path d="M7 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/><path d="M17 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <h1 style="font-size:16px;">Sumaa FIN Services Admin</h1>
+      </div>
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-deposits.html">Deposits</a>
+        <a href="admin-withdrawals.html">Withdrawals</a>
+        <a href="admin-bulk-adjustment.html">Bulk % Adjustment</a>
+        <a href="admin-support.html">Support</a>
+        <a href="admin-settings.html" class="active">Settings</a>
+      </nav>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h2>Platform Settings</h2>
+        </div>
+        <div class="topbar-right">
+          <a href="admin-notifications.html" class="icon-btn" id="notifBellBtn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="nav-badge" id="notifBadge"></span>
+          </a>
+          <a href="#" class="icon-btn logout-btn" id="logoutLink" aria-label="Logout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel" style="max-width:560px;">
+        <h3>Deposit Address (USDT BEP20)</h3>
+        <p class="empty-msg" style="padding-top:0;">
+          This is the address shown to users on their Deposit page. Update it here — no
+          server restart or .env edit needed, and it takes effect immediately.
+        </p>
+        <form id="addressForm">
+          <label for="depositAddress">USDT (BEP20) Address</label>
+          <input type="text" id="depositAddress" required placeholder="0x...">
+          <button type="submit" class="btn" id="saveBtn">Save Address</button>
+        </form>
+        <div class="error-box" id="errorBox"></div>
+        <div class="success-box" id="successBox"></div>
+      </div>
+
+      <div class="panel" style="max-width:560px;">
+        <h3>Principal Withdrawal Windows</h3>
+        <p class="empty-msg" style="padding-top:0;">
+          Enter the month numbers (after deposit approval) at which users are allowed
+          to withdraw their Principal. Use a single number for one window, or
+          comma-separate multiple — e.g. <strong>18,36</strong> (original default),
+          <strong>1</strong> (every month), <strong>3,6,12</strong> (quarterly, semi, annual).
+        </p>
+        <form id="monthsForm">
+          <label for="withdrawalMonths">Withdrawal Window(s) — months after deposit</label>
+          <input type="text" id="withdrawalMonths" required placeholder="e.g. 18,36"
+            pattern="^(\d+)(,\d+)*$" title="One or more positive integers, comma-separated">
+          <button type="submit" class="btn" id="monthsBtn">Save Windows</button>
+        </form>
+        <div class="error-box" id="monthsErrorBox"></div>
+        <div class="success-box" id="monthsSuccessBox"></div>
+      </div>
+
+      <div class="panel" style="max-width:560px;">
+        <h3>Withdrawal Testing Mode</h3>
+        <p class="empty-msg" style="padding-top:0;">
+          Withdrawals normally follow the real rules — Principal is only eligible at the
+          18th or 36th month after deposit approval, and Income only on the last day of
+          the month. Turn this on to bypass both locks for every user so you can submit
+          and approve test withdrawals right now. Remember to turn it back off afterwards.
+        </p>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Bypass withdrawal eligibility lock</div>
+            <div class="toggle-sub" id="lockStatusText">Loading current status…</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="lockBypassToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="error-box" id="lockErrorBox"></div>
+        <div class="success-box" id="lockSuccessBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    const admin = requireAdmin();
+
+    function setLockStatusText(enabled) {
+      const el = document.getElementById('lockStatusText');
+      el.textContent = enabled
+        ? 'ON — all users can withdraw regardless of eligibility date.'
+        : 'OFF — normal eligibility rules apply.';
+      el.style.color = enabled ? 'var(--accent)' : 'var(--muted)';
+    }
+
+    async function loadSettings() {
+      try {
+        const s = await apiFetch('/admin/settings');
+        document.getElementById('depositAddress').value = s.deposit_address || '';
+        document.getElementById('withdrawalMonths').value = s.withdrawal_months || '18,36';
+        document.getElementById('lockBypassToggle').checked = !!s.withdrawal_lock_bypass;
+        setLockStatusText(!!s.withdrawal_lock_bypass);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.getElementById('monthsForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('monthsErrorBox');
+      const successBox = document.getElementById('monthsSuccessBox');
+      errorBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const btn = document.getElementById('monthsBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        const data = await apiFetch('/admin/settings/withdrawal-months', {
+          method: 'PUT',
+          body: JSON.stringify({ months: document.getElementById('withdrawalMonths').value.trim() })
+        });
+        showBox(successBox, data.message, false);
+      } catch (err) {
+        showBox(errorBox, err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Windows';
+      }
+    });
+
+    document.getElementById('addressForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      errorBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        await apiFetch('/admin/settings/deposit-address', {
+          method: 'PUT',
+          body: JSON.stringify({ address: document.getElementById('depositAddress').value.trim() })
+        });
+        showBox(successBox, 'Deposit address updated. Users will see it immediately on their Deposit page.', false);
+      } catch (err) {
+        showBox(errorBox, err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Address';
+      }
+    });
+
+    document.getElementById('lockBypassToggle').addEventListener('change', async function () {
+      const errorBox = document.getElementById('lockErrorBox');
+      const successBox = document.getElementById('lockSuccessBox');
+      errorBox.style.display = 'none';
+      successBox.style.display = 'none';
+
+      const enabled = this.checked;
+      this.disabled = true;
+      try {
+        const data = await apiFetch('/admin/settings/withdrawal-lock-bypass', {
+          method: 'PUT',
+          body: JSON.stringify({ enabled })
+        });
+        setLockStatusText(data.withdrawal_lock_bypass);
+        showBox(successBox, data.message, false);
+      } catch (err) {
+        this.checked = !enabled;
+        showBox(errorBox, err.message);
+      } finally {
+        this.disabled = false;
+      }
+    });
+
+    loadSettings();
+  </script>
+</body>
+</html>

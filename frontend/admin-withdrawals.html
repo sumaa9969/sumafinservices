@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Sumaa FIN Services - Manage Withdrawals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="12" rx="3" stroke="#fff" stroke-width="1.5"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="15" cy="13" r="1.5" fill="#fff"/><path d="M9 17h6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M12 4v4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1.2" fill="#fff"/><path d="M7 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/><path d="M17 8V6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <h1 style="font-size:16px;">Sumaa FIN Services Admin</h1>
+      </div>
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-deposits.html">Deposits</a>
+        <a href="admin-withdrawals.html" class="active">Withdrawals</a>
+        <a href="admin-bulk-adjustment.html">Bulk % Adjustment</a>
+        <a href="admin-support.html">Support</a>
+        <a href="admin-settings.html">Settings</a>
+      </nav>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h2>Manage Withdrawals</h2>
+        </div>
+        <div class="topbar-right">
+                  <select id="statusFilter" style="width:auto;">
+          <option value="">All</option>
+          <option value="submitted" selected>Submitted</option>
+          <option value="approved">Approved</option>
+          <option value="processed">Processed</option>
+          <option value="rejected">Rejected</option>
+        </select>
+          <a href="admin-notifications.html" class="icon-btn" id="notifBellBtn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="nav-badge" id="notifBadge"></span>
+          </a>
+          <a href="#" class="icon-btn logout-btn" id="logoutLink" aria-label="Logout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div id="tableWrap"><p class="empty-msg">Loading...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    const admin = requireAdmin();
+
+    function statusBadge(status) { return `<span class="badge ${status}">${status}</span>`; }
+
+    async function loadWithdrawals() {
+      const wrap = document.getElementById('tableWrap');
+      const status = document.getElementById('statusFilter').value;
+      const data = await apiFetch('/admin/withdrawals' + (status ? `?status=${status}` : ''));
+      if (!data.withdrawals.length) {
+        wrap.innerHTML = '<p class="empty-msg">No withdrawal requests found.</p>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Date</th><th>User</th><th>Wallet</th><th>Amount</th><th>Method</th><th>To Address</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+      data.withdrawals.forEach(w => {
+        html += `<tr>
+          <td>${formatDate(w.created_at)}</td>
+          <td>${w.user_name}<br><span class="empty-msg" style="padding:0;">${w.user_code} · ${w.user_email}</span></td>
+          <td>${w.wallet_type === 'income' ? 'Income' : 'Principal'}</td>
+          <td>${formatMoney(w.amount)}</td>
+          <td>${w.method || '-'}</td>
+          <td>${w.to_address || '-'}</td>
+          <td>${statusBadge(w.status)}</td>
+          <td>
+            ${w.status === 'submitted' ? `
+              <div class="action-row">
+                <button class="btn small" onclick="processWithdrawal(${w.id}, 'approve')">Approve</button>
+                <button class="btn small danger" onclick="processWithdrawal(${w.id}, 'reject')">Reject</button>
+              </div>
+            ` : w.status === 'approved' ? `
+              <div class="action-row">
+                <button class="btn small" onclick="processWithdrawal(${w.id}, 'process')">Mark Processed</button>
+                <button class="btn small danger" onclick="processWithdrawal(${w.id}, 'reject')">Reject</button>
+              </div>
+            ` : (w.remarks || '-')}
+          </td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+
+    async function processWithdrawal(id, action) {
+      let remarks = '';
+      if (action === 'reject') {
+        remarks = prompt('Reason for rejection (optional). Funds will be refunded to the user wallet:') || '';
+      }
+      const confirmText = {
+        approve: 'Approve this withdrawal? Funds have not been sent yet — you\'ll mark it Processed once they are.',
+        process: 'Mark this withdrawal as Processed? Only do this once the funds have actually been sent.',
+        reject: 'Reject this withdrawal?'
+      }[action];
+      if (!confirm(confirmText)) return;
+      try {
+        await apiFetch(`/admin/withdrawals/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ action, remarks })
+        });
+        loadWithdrawals();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    document.getElementById('statusFilter').addEventListener('change', loadWithdrawals);
+    loadWithdrawals();
+  </script>
+</body>
+</html>
